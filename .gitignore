@@ -1,0 +1,36 @@
+# Modelo para o futuro repositorio. Revisar antes do primeiro commit.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+relatorios/
+resultado/
+dados/
+publicar-frontend/
+work/
+tmp/
+*.pdf
+*.PDF
+*.csv
+*.xlsx
+*.sql.gz
+*.dump
+*.bak
+*.zip
+# Capturas reais nao devem entrar por engano.
+*.png
+*.jpg
+*.jpeg
+# Autorizar demos sinteticas apenas apos revisao, com excecoes especificas.
+.DS_Store
+Thumbs.db
+
+.test-work/

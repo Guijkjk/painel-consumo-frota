@@ -1,0 +1,11 @@
+const assert = require('node:assert/strict');
+const pacote = require('./demo/exemplo-sintetico.json');
+const { consultar } = require('./web/dados-estaticos.js');
+const frota = consultar(pacote, '/frota').itens;
+assert.equal(frota.find(r => r.prefixo === 'DEMO-A').situacao, 'queda');
+assert.equal(frota.find(r => r.prefixo === 'DEMO-B').situacao, 'melhora');
+assert.equal(frota.find(r => r.prefixo === 'DEMO-C').situacao, 'estavel');
+assert.equal(consultar(pacote, '/painel').veiculos, 3);
+assert.equal(consultar(pacote, '/painel?inicio=2027-01-01').km_por_litro, null);
+assert.equal(consultar(pacote, '/veiculos/DEMO-A/historico').total_dias, 3);
+console.log('OK: demonstracao sintetica e classificacoes.');

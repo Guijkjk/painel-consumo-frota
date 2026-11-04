@@ -1,0 +1,4 @@
+pdfplumber>=0.11,<0.12
+PyMySQL[rsa]>=1.1,<2
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
