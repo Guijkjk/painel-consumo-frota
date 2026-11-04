@@ -1,0 +1,69 @@
+{
+  "versao": 1,
+  "exportado_em": "2026-01-04T12:00:00+00:00",
+  "diarios": [
+    {
+      "prefixo": "DEMO-A",
+      "data": "2026-01-01",
+      "abastecimentos": 1,
+      "km_total": "200",
+      "litros_total": "80"
+    },
+    {
+      "prefixo": "DEMO-A",
+      "data": "2026-01-02",
+      "abastecimentos": 1,
+      "km_total": "210",
+      "litros_total": "90"
+    },
+    {
+      "prefixo": "DEMO-A",
+      "data": "2026-01-03",
+      "abastecimentos": 1,
+      "km_total": "205",
+      "litros_total": "100"
+    },
+    {
+      "prefixo": "DEMO-B",
+      "data": "2026-01-01",
+      "abastecimentos": 1,
+      "km_total": "180",
+      "litros_total": "90"
+    },
+    {
+      "prefixo": "DEMO-B",
+      "data": "2026-01-02",
+      "abastecimentos": 1,
+      "km_total": "200",
+      "litros_total": "85"
+    },
+    {
+      "prefixo": "DEMO-B",
+      "data": "2026-01-03",
+      "abastecimentos": 1,
+      "km_total": "220",
+      "litros_total": "80"
+    },
+    {
+      "prefixo": "DEMO-C",
+      "data": "2026-01-01",
+      "abastecimentos": 1,
+      "km_total": "150",
+      "litros_total": "60"
+    },
+    {
+      "prefixo": "DEMO-C",
+      "data": "2026-01-02",
+      "abastecimentos": 1,
+      "km_total": "150",
+      "litros_total": "60"
+    },
+    {
+      "prefixo": "DEMO-C",
+      "data": "2026-01-03",
+      "abastecimentos": 1,
+      "km_total": "150",
+      "litros_total": "60"
+    }
+  ]
+}

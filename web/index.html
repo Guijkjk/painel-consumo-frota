@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Acompanhamento do consumo e da evolução da frota.">
+  <meta name="theme-color" content="#152b3b">
+  <title>Frota | Inteligência operacional</title>
+  <!-- /assets ja esta disponivel no backend local, inclusive sem reinicia-lo. -->
+  <link rel="stylesheet" href="/assets/style.css?v=5">
+  <script src="/assets/config.js?v=5" defer></script>
+  <script src="/assets/dados-estaticos.js?v=5" defer></script>
+  <script src="/assets/app.js?v=5" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#visao">Ir para o conteúdo</a>
+  <aside class="sidebar" aria-label="Menu principal">
+    <a class="brand" href="#visao"><span class="brand-mark" aria-hidden="true">F<span>.</span></span><span>FROTA<small>INTELIGÊNCIA OPERACIONAL</small></span></a>
+    <p class="nav-label">ESPAÇO DE TRABALHO</p>
+    <nav>
+      <a class="active" href="#visao"><span aria-hidden="true">▦</span> Visão geral</a>
+      <a href="#veiculos"><span aria-hidden="true">▤</span> Veículos</a>
+      <a href="#historico"><span aria-hidden="true">↗</span> Histórico</a>
+      <a href="#importacao"><span aria-hidden="true">↑</span> Importar relatório</a>
+    </nav>
+    <div class="sidebar-tip"><span class="tip-icon" aria-hidden="true">↗</span><strong>Uma operação mais eficiente começa pelos dados.</strong><p>Importe os relatórios diariamente para acompanhar sua frota.</p></div>
+    <div class="aside-foot"><span class="company-avatar" aria-hidden="true">FD</span><div>Frota demonstrativa<small>Gestão de transporte urbano</small></div></div>
+  </aside>
+
+  <main id="visao">
+    <header class="page-header">
+      <div><div class="breadcrumb">Gestão operacional <span>/</span> Visão geral</div><h1>Sua frota, sob uma nova perspectiva<span>.</span></h1><p>Dados para acompanhar o consumo e orientar as próximas decisões.</p></div>
+      <a class="button button-primary" href="#importacao">↑ Importar PDF</a>
+    </header>
+
+    <section class="overview-banner" aria-label="Apresentação do painel">
+      <div><span class="eyebrow">GESTÃO À VISTA</span><h2>Mais clareza para cada quilômetro.</h2><p>Acompanhe a operação e encontre os veículos que merecem atenção.</p></div>
+      <div class="banner-symbol" aria-hidden="true"><svg viewBox="0 0 180 110"><path d="M8 90H172M25 75L65 58L99 68L152 23M135 23H152V40" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="65" cy="58" r="5" fill="currentColor"/><circle cx="99" cy="68" r="5" fill="currentColor"/></svg></div>
+    </section>
+
+    <form id="filtros" class="toolbar" aria-label="Filtrar período">
+      <div class="filter-caption"><span class="eyebrow">PERÍODO DE ANÁLISE</span><span id="periodo">Todos os registros</span></div>
+      <label for="inicio">Data inicial<input type="date" id="inicio"></label>
+      <label for="fim">Data final<input type="date" id="fim"></label>
+      <button type="submit">Aplicar período</button>
+      <button type="button" class="secondary" id="limpar">Limpar filtros</button>
+    </form>
+    <div id="mensagem" role="status" aria-live="polite"></div>
+    <p id="atualizacao-dados" role="status" aria-live="polite"></p>
+
+    <section class="cards" aria-label="Indicadores da operação">
+      <article class="metric"><div class="metric-heading"><span>Veículos no período</span><span class="metric-icon" aria-hidden="true">▤</span></div><strong id="k-veiculos">—</strong><small><span class="dot"></span> Com abastecimento registrado</small></article>
+      <article class="metric"><div class="metric-heading"><span>Quilometragem registrada</span><span class="metric-icon blue" aria-hidden="true">↗</span></div><strong id="k-km">—</strong><small>km · soma do KM Total do relatório</small></article>
+      <article class="metric"><div class="metric-heading"><span>Combustível abastecido</span><span class="metric-icon amber" aria-hidden="true">◈</span></div><strong id="k-litros">—</strong><small>litros · volume total do período</small></article>
+      <article class="metric highlight"><div class="metric-heading"><span>Rendimento da frota</span><span class="metric-icon" aria-hidden="true">⌁</span></div><strong id="k-media">—</strong><small>Quilômetros totais ÷ litros totais</small></article>
+    </section>
+
+    <section class="panel" id="veiculos" aria-labelledby="titulo-veiculos">
+      <div class="section-head">
+        <div><span class="eyebrow">ACOMPANHAMENTO DA OPERAÇÃO</span><h2 id="titulo-veiculos">Cada veículo conta uma história.</h2><p>Consulte o último dia disponível de cada carro no período.</p></div>
+        <div class="search"><label for="busca">Buscar prefixo</label><input id="busca" placeholder="Digite o prefixo..." type="search" autocomplete="off"></div>
+      </div>
+      <div class="fleet-summary" aria-label="Situação dos veículos">
+        <span><i class="dot red"></i> Em queda <strong id="total-queda">—</strong></span>
+        <span><i class="dot"></i> Em melhora <strong id="total-melhora">—</strong></span>
+        <span><i class="dot blue-dot"></i> Estáveis <strong id="total-estavel">—</strong></span>
+        <span><i class="dot gray"></i> Sem comparação <strong id="total-sem-historico">—</strong></span>
+      </div>
+      <div class="table-controls">
+        <span id="contagem"></span>
+        <label for="situacao">Situação<select id="situacao"><option value="todos">Todos os veículos</option><option value="queda">Em queda</option><option value="melhora">Em melhora</option><option value="estavel">Estáveis</option><option value="sem_historico">Sem comparação</option></select></label>
+        <label for="ordem">Ordenar por<select id="ordem"><option value="prefixo">Prefixo</option><option value="variacao">Maior queda primeiro</option><option value="rendimento">Menor km/l primeiro</option></select></label>
+      </div>
+      <div class="table-wrap fleet-table">
+        <table>
+          <caption class="sr-only">Indicadores e variação por veículo</caption>
+          <thead><tr><th scope="col">Prefixo</th><th scope="col">Último registro</th><th scope="col">KM Total</th><th scope="col">Litros</th><th scope="col">km/l</th><th scope="col">Variação</th><th scope="col">Situação</th><th scope="col"><span class="sr-only">Consultar</span></th></tr></thead>
+          <tbody id="linhas"></tbody>
+        </table>
+      </div>
+      <p class="note"><strong>Como ler:</strong> a variação compara os dois últimos dias registrados no período, que podem não ser consecutivos. Entre −1% e +1%, o resultado é estável. Uma queda sinaliza investigação; não identifica a causa.</p>
+    </section>
+
+    <section class="panel history-panel" id="historico" aria-labelledby="titulo-historico">
+      <div class="section-head"><div><span class="eyebrow">OLHE MAIS DE PERTO</span><h2 id="titulo-historico">Histórico do veículo</h2><p id="descricao-historico">Escolha um prefixo na tabela para acompanhar sua evolução.</p></div><span id="variacao-detalhe"></span></div>
+      <div class="charts">
+        <article><div class="chart-title"><h3>Rendimento</h3><span>km/l</span></div><div id="grafico-consumo" class="chart"><p>Selecione um veículo para visualizar o consumo.</p></div></article>
+        <article><div class="chart-title"><h3>Quilometragem registrada</h3><span>km</span></div><div id="grafico-km" class="chart"><p>Selecione um veículo para visualizar a distância.</p></div></article>
+      </div>
+      <details><summary>Consultar os dados do histórico</summary><div class="table-wrap"><table><caption class="sr-only">Histórico diário do veículo selecionado</caption><thead><tr><th scope="col">Data</th><th scope="col">KM Total</th><th scope="col">Litros</th><th scope="col">km/l</th></tr></thead><tbody id="dados-historico"></tbody></table></div></details>
+    </section>
+
+    <section class="upload panel" id="importacao" aria-labelledby="titulo-importacao">
+      <div class="upload-heading"><span class="upload-icon" aria-hidden="true">↑</span><div><span class="eyebrow">MANTENHA SUA OPERAÇÃO ATUALIZADA</span><h2 id="titulo-importacao">Um novo relatório. Novas perspectivas.</h2><p>Envie o PDF. A validação e a importação acontecem por aqui.</p></div><span class="file-tag">PDF · até 10 MB</span></div>
+      <form id="importar-form"><label for="arquivo-pdf">Selecione o relatório no seu computador<input id="arquivo-pdf" type="file" accept=".pdf,application/pdf" required></label><button id="botao-importar" type="submit">Importar PDF</button></form>
+      <div id="resultado-importacao" role="status" aria-live="polite"></div>
+    </section>
+
+    <footer><strong>FROTA<span>.</span></strong><p>Inteligência para movimentar sua operação.<br>Confirme o intervalo operacional do KM Total antes de interpretar as comparações.</p><a href="#visao">Voltar ao topo ↑</a></footer>
+  </main>
+</body>
+</html>
